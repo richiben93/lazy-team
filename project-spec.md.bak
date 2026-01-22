@@ -1,0 +1,131 @@
+# Lazy Team - Build Agent Prompt
+
+You are OpenCode working in a fresh Git repository that will be pushed to GitHub and deployed on Vercel.
+
+Goal:
+Build a very high-end, “portfolio-grade” website for my cycling team: “Lazy Team”.
+The site must host photographs and information about trips we have done and we will do.
+It must be easy for me to add new trips later (including GPX files, photos, and a story), and the site should automatically generate a dedicated page per trip.
+
+Visual / UX direction (must follow):
+- Premium editorial look with large hero imagery, strong typography hierarchy, lots of whitespace, and smooth transitions (inspired by microsoft.ai’s editorial/hero composition).
+- A clean “case studies / work grid” browsing experience with filters/tags (inspired by hazelmay.co.uk/cases).
+- A narrative long-form trip story layout with big typography and immersive image blocks (inspired by wabi.ai’s storytelling style).
+- Use tasteful motion: subtle parallax, scroll-triggered reveals, and smooth section transitions. Keep it fast and accessible.
+
+Tech stack requirements:
+- TypeScript only.
+- Framework: Next.js (App Router).
+- Styling: Tailwind CSS.
+- Motion: Framer Motion.
+- Maps: Mapbox GL JS (required), using react-map-gl (preferred).
+- Content: file-based content in repo (no database). Use MDX + frontmatter.
+- Images: Next.js Image optimization; add a photo gallery with lightbox.
+
+Vercel + Next.js requirements (must satisfy):
+- The project must build and run on Vercel without special hacks.
+- Provide `vercel.json` only if necessary; otherwise rely on standard Next.js defaults.
+- Ensure Mapbox CSS is loaded correctly (import "mapbox-gl/dist/mapbox-gl.css" in a client component or global CSS per best practice).
+- Ensure no server-side usage of `window`/Mapbox APIs (Mapbox components must be client-only).
+- Provide `.env.example` and document Vercel env vars setup.
+
+Mapbox requirements (important):
+- Read token from env var: NEXT_PUBLIC_MAPBOX_TOKEN.
+- If token is missing:
+  - render a tasteful fallback state (static map placeholder + message “Set NEXT_PUBLIC_MAPBOX_TOKEN”)
+  - the rest of the site must still work and `npm run build` must still pass.
+- Do NOT commit secrets.
+
+Content + routing requirements:
+- Trips are added by creating a folder: /content/trips/{slug}/ with:
+  - trip.mdx with frontmatter: title, date, location, tags, coverImage, gpxFile, excerpt (and optional stats)
+  - route.gpx
+  - photos/… (local images committed to repo)
+- Members are added in /content/members/{slug}.mdx (name, nickname, role, bio, avatar).
+- The site must generate:
+  - /trips (index grid with filter/sort)
+  - /trips/[slug] (detail page)
+  - /members and /about
+
+GPX / data pipeline requirements (performance + deploy friendly):
+- Do NOT parse all GPX at runtime on the client.
+- Implement a build-time precompute step that:
+  - parses each route.gpx to GeoJSON
+  - computes summary stats (distance, elevation gain, bounds)
+  - writes an index file under /content/.generated/trips.json (and per-trip GeoJSON if needed)
+- The site uses the generated JSON for:
+  - home map overview
+  - trips index sorting/filtering
+  - trip detail route rendering
+- Provide `npm run generate` to run the precompute.
+- Ensure `npm run build` runs generation automatically (via prebuild script) so Vercel builds work.
+- Add unit tests (Vitest) for GPX parsing/stat utilities.
+
+Information architecture (pages):
+1) Home page (must be “wow”):
+   - Full-bleed hero:
+     - Huge title “LAZY TEAM”
+     - punchy subtitle
+     - CTA “Explore our rides”
+   - Premium animated transition hero → map section.
+   - Map section:
+     - plot all trips (polylines)
+     - hover/click shows card with cover + title + date + key stats
+     - click navigates to trip detail
+   - Featured trips section.
+
+2) Trips page:
+   - Filterable grid with tags/year/location.
+   - Sort: newest, longest, most elevation.
+   - Cards: cover, title, date, stats.
+
+3) Trip detail (/trips/[slug]):
+   - Hero with cover image, title, stats.
+   - Mapbox route map + elevation chart (SVG or small chart lib).
+   - Photo gallery (masonry/grid) + lightbox.
+   - Long-form story (MDX) with rich blocks.
+   - Next/Prev navigation.
+
+4) About (/about):
+   - Team story, values, big typography, image collage.
+
+5) Members (/members):
+   - Member cards and optionally /members/[slug].
+
+Design system requirements:
+- Consistent design tokens:
+  - 2–3 fonts via next/font (elegant, modern)
+  - palette (choose one theme and apply globally)
+  - spacing rhythm and grid
+- Components: Hero, Section, TripCard, MemberCard, Gallery, Map, StatsBar, FilterBar.
+- Accessibility: keyboard nav, alt text, reduced motion support, good contrast.
+
+Engineering + quality:
+- Clean structure.
+- ESLint + Prettier.
+- `npm run lint`, `npm run test`, `npm run build` must pass locally.
+- Provide demo content: at least 2 trips and 3 members (use placeholder images if needed).
+
+Repo deliverables:
+- Next.js app with all pages, components, animations
+- MDX content system + sample content
+- Mapbox map rendering + polylines
+- GPX precompute scripts + generated JSON artifacts in repo (or generated at build time but committed is ok)
+- Gallery with lightbox
+- README:
+  - local dev: npm install, npm run dev
+  - generation: npm run generate
+  - build: npm run build
+  - Vercel deployment steps
+  - Mapbox token setup
+- .env.example:
+  - NEXT_PUBLIC_MAPBOX_TOKEN=
+
+Workflow rules:
+- Work in small commits with meaningful messages.
+- After each milestone, run:
+  - npm install
+  - npm run lint
+  - npm run test
+  - npm run build
+- Fix failures immediately.

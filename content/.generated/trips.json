@@ -1,0 +1,72 @@
+[
+  {
+    "slug": "coastal-ride",
+    "title": "Coastal Ride",
+    "date": "2025-08-20",
+    "location": "French Riviera",
+    "tags": [
+      "Coastal",
+      "Sun",
+      "Fast"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1541625602330-2277a4c4b28d?auto=format&fit=crop&q=80&w=2000",
+    "gpxFile": "route.gpx",
+    "photos": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1506929194291-dd0929913977?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&q=80&w=1200"
+    ],
+    "excerpt": "A beautiful ride along the Mediterranean coast.",
+    "stats": {
+      "distance": 2678.4819563411265,
+      "elevationGain": 30,
+      "bounds": [
+        [
+          7.419,
+          43.7315
+        ],
+        [
+          7.44,
+          43.75
+        ]
+      ]
+    },
+    "geojsonUrl": "/content/.generated/trip-coastal-ride.json"
+  },
+  {
+    "slug": "alpine-climb",
+    "title": "Alpine Climb",
+    "date": "2025-07-15",
+    "location": "Swiss Alps",
+    "tags": [
+      "Mountains",
+      "Epic",
+      "Climbing"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=2000",
+    "gpxFile": "route.gpx",
+    "photos": [
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1519904981063-b0143236c281?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1551632432-c735e8248427?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?auto=format&fit=crop&q=80&w=1200"
+    ],
+    "excerpt": "A grueling climb through the heart of the Alps.",
+    "stats": {
+      "distance": 269.94945879124157,
+      "elevationGain": 100,
+      "bounds": [
+        [
+          8.531,
+          46.521
+        ],
+        [
+          8.533,
+          46.523
+        ]
+      ]
+    },
+    "geojsonUrl": "/content/.generated/trip-alpine-climb.json"
+  }
+]
