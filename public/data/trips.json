@@ -1,5 +1,38 @@
 [
   {
+    "slug": "random",
+    "title": "random",
+    "date": "2025-10-12",
+    "location": "Modena, Italy",
+    "tags": [
+      "Mountain",
+      "Troppo Lazy"
+    ],
+    "coverImage": "/trips/random/cover.jpg",
+    "gpxFile": "route.gpx",
+    "photos": [
+      "/trips/random/cover.jpg",
+      "/trips/random/cover.jpg",
+      "/trips/random/cover.jpg"
+    ],
+    "excerpt": "il viaggio top",
+    "stats": {
+      "distance": 9366.588908654476,
+      "elevationGain": 322.11079299999983,
+      "bounds": [
+        [
+          11.01702,
+          45.648928
+        ],
+        [
+          11.03639,
+          45.673372
+        ]
+      ]
+    },
+    "geojsonUrl": "/data/trip-random.json"
+  },
+  {
     "slug": "coastal-ride",
     "title": "Coastal Ride",
     "date": "2025-08-20",

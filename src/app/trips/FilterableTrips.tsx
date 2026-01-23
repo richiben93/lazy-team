@@ -41,7 +41,7 @@ export default function FilterableTrips({ initialTrips }: FilterableTripsProps) 
     <div>
       <div className="flex flex-col md:flex-row gap-8 justify-between items-center mb-16 pb-8 border-b border-foreground/5">
         <div className="relative w-full md:w-96">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 opacity-30" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
           <input
             type="text"
             placeholder="Search trips..."
@@ -58,7 +58,7 @@ export default function FilterableTrips({ initialTrips }: FilterableTripsProps) 
                 key={option}
                 onClick={() => setSortBy(option)}
                 className={`px-4 py-2 text-[10px] uppercase tracking-widest font-bold rounded-lg transition-colors ${
-                  sortBy === option ? "bg-foreground text-background" : "hover:bg-foreground/5 opacity-50"
+                  sortBy === option ? "bg-foreground text-background" : "hover:bg-foreground/5 text-secondary"
                 }`}
               >
                 {option}
@@ -72,7 +72,7 @@ export default function FilterableTrips({ initialTrips }: FilterableTripsProps) 
             <button
               onClick={() => setSelectedTag(null)}
               className={`px-4 py-2 text-[10px] uppercase tracking-widest font-bold rounded-full border transition-colors ${
-                selectedTag === null ? "bg-foreground text-background border-foreground" : "border-foreground/10 opacity-50 hover:opacity-100"
+                selectedTag === null ? "bg-foreground text-background border-foreground" : "border-foreground/20 text-secondary hover:text-foreground"
               }`}
             >
               All
@@ -82,7 +82,7 @@ export default function FilterableTrips({ initialTrips }: FilterableTripsProps) 
                 key={tag}
                 onClick={() => setSelectedTag(tag)}
                 className={`px-4 py-2 text-[10px] uppercase tracking-widest font-bold rounded-full border transition-colors ${
-                  selectedTag === tag ? "bg-foreground text-background border-foreground" : "border-foreground/10 opacity-50 hover:opacity-100"
+                  selectedTag === tag ? "bg-foreground text-background border-foreground" : "border-foreground/20 text-secondary hover:text-foreground"
                 }`}
               >
                 {tag}
@@ -100,7 +100,7 @@ export default function FilterableTrips({ initialTrips }: FilterableTripsProps) 
         </div>
       ) : (
         <div className="py-40 text-center">
-          <p className="text-xl opacity-30">No trips found matching your criteria.</p>
+          <p className="text-xl text-muted">No trips found matching your criteria.</p>
         </div>
       )}
     </div>

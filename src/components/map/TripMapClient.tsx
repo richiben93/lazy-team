@@ -2,8 +2,9 @@
 
 import dynamic from "next/dynamic";
 
-const TripMap = dynamic(() => import("@/app/trips/[slug]/TripMap"), { ssr: false });
+// Use the FREE version - no API keys needed!
+const FreeTripMap = dynamic(() => import("@/app/trips/[slug]/FreeTripMap"), { ssr: false });
 
 export default function TripMapClient({ geojsonUrl, bounds }: { geojsonUrl: string; bounds: [[number, number], [number, number]] | null }) {
-  return <TripMap geojsonUrl={geojsonUrl} bounds={bounds} />;
+  return <FreeTripMap geojsonUrl={geojsonUrl} bounds={bounds} />;
 }

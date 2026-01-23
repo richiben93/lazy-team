@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export const metadata = {
-  title: "About — LAZY TEAM",
+  title: "About — LAZY TEAM 🌽",
   description: "Learn more about the mission and history of Lazy Team.",
 };
 
@@ -11,11 +11,11 @@ export default function AboutPage() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div>
-            <h1 className="text-xs font-bold uppercase tracking-[0.2em] opacity-30 mb-6">The Story</h1>
+            <h1 className="text-xs font-bold uppercase tracking-[0.2em] text-muted mb-6">The Story</h1>
             <h2 className="text-6xl md:text-8xl font-bold tracking-tighter mb-12 font-serif leading-tight">
               We ride because it&apos;s hard.
             </h2>
-            <div className="space-y-8 text-xl opacity-70 leading-relaxed tracking-tight">
+            <div className="space-y-8 text-xl text-secondary leading-relaxed tracking-tight">
               <p>
                 Lazy Team was born from a simple idea: that the best way to see the world is at 25 kilometers per hour. We aren&apos;t professional athletes, but we treat every climb like a world championship.
               </p>
@@ -59,9 +59,9 @@ export default function AboutPage() {
 
 function ValueCard({ title, description }: { title: string; description: string }) {
   return (
-    <div className="p-12 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-foreground/5">
+    <div className="p-12 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-foreground/10 shadow-lg">
       <h3 className="text-2xl font-bold mb-6 font-serif">{title}</h3>
-      <p className="opacity-50 leading-relaxed">{description}</p>
+      <p className="text-secondary leading-relaxed">{description}</p>
     </div>
   );
 }

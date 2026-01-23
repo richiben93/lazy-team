@@ -44,7 +44,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pb-20">
           <Link 
             href="/trips" 
-            className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors text-xs font-bold uppercase tracking-[0.2em] mb-8 group"
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors text-xs font-bold uppercase tracking-[0.2em] mb-8 group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" /> Back to trips
           </Link>
@@ -77,11 +77,11 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
             </div>
             <div className="flex flex-col justify-between">
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-[0.2em] opacity-30 mb-8">Route Profile</h3>
+                <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted mb-8">Route Profile</h3>
                 <ElevationChart geojsonUrl={trip.geojsonUrl} />
               </div>
               <div className="mt-12 p-8 bg-white dark:bg-black rounded-3xl border border-foreground/5">
-                <p className="text-sm italic opacity-60 leading-relaxed font-serif">
+                <p className="text-sm italic text-secondary leading-relaxed font-serif">
                   &quot;{trip.excerpt}&quot;
                 </p>
               </div>
@@ -92,7 +92,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
 
       {/* Story Section */}
       <section className="py-32 px-6">
-        <div className="max-w-3xl mx-auto prose prose-xl dark:prose-invert prose-headings:font-serif prose-headings:tracking-tighter prose-p:tracking-tight prose-p:leading-relaxed opacity-90">
+        <div className="max-w-3xl mx-auto prose prose-xl dark:prose-invert prose-headings:font-serif prose-headings:tracking-tighter prose-p:tracking-tight prose-p:leading-relaxed prose-p:text-secondary dark:prose-p:text-yellow-200">
           <MDXRemote source={content} />
         </div>
       </section>
@@ -106,7 +106,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
           {prevTrip && (
             <Link href={`/trips/${prevTrip.slug}`} className="flex-1 group">
               <div className="p-12 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-foreground/5 transition-all hover:border-foreground/20">
-                <span className="text-[10px] font-bold uppercase tracking-widest opacity-30 block mb-4">Previous Trip</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-muted block mb-4">Previous Trip</span>
                 <h4 className="text-2xl font-bold tracking-tight flex items-center gap-4">
                   <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-2" />
                   {prevTrip.title}
@@ -117,7 +117,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
           {nextTrip && (
             <Link href={`/trips/${nextTrip.slug}`} className="flex-1 group text-right">
               <div className="p-12 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-foreground/5 transition-all hover:border-foreground/20">
-                <span className="text-[10px] font-bold uppercase tracking-widest opacity-30 block mb-4">Next Trip</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-muted block mb-4">Next Trip</span>
                 <h4 className="text-2xl font-bold tracking-tight flex items-center justify-end gap-4">
                   {nextTrip.title}
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
@@ -134,7 +134,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
 function StatItem({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value: string }) {
   return (
     <div className="text-white">
-      <div className="flex items-center gap-2 opacity-50 mb-2">
+      <div className="flex items-center gap-2 text-white/80 mb-2">
         <Icon className="w-3 h-3" />
         <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
       </div>

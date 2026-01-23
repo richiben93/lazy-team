@@ -16,11 +16,11 @@ export default function Gallery({ photos }: GalleryProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-24 border-t border-foreground/5">
-      <h2 className="text-xs font-bold uppercase tracking-[0.2em] opacity-30 mb-12">Gallery</h2>
+      <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted mb-12">Gallery</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {photos.map((photo, i) => (
           <motion.div
-            key={photo}
+            key={`${photo}-${i}`}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -83,7 +83,7 @@ export default function Gallery({ photos }: GalleryProps) {
               <ChevronRight className="w-10 h-10" />
             </button>
 
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 text-xs font-bold uppercase tracking-[0.2em]">
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/80 text-xs font-bold uppercase tracking-[0.2em]">
               {index + 1} / {photos.length}
             </div>
           </motion.div>

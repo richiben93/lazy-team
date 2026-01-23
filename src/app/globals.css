@@ -1,8 +1,44 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #111111;
+  /* Primary Modena Colors */
+  --background: #fff8dc;
+  --foreground: #000000;
+  
+  /* Enhanced Blue Palette */
+  --blue-900: #0a1628;
+  --blue-800: #0d1b3c;
+  --blue-700: #132952;
+  --blue-600: #1a3a6e;
+  --blue-500: #234b8a;
+  --blue-400: #3366b8;
+  --blue-300: #5588d4;
+  --blue-200: #88aae6;
+  --blue-100: #c4d5f2;
+  
+  /* Enhanced Yellow/Gold Palette */
+  --yellow-900: #8b6914;
+  --yellow-800: #a67c00;
+  --yellow-700: #c99700;
+  --yellow-600: #e6ad00;
+  --yellow-500: #ffc107;
+  --yellow-400: #ffde00;
+  --yellow-300: #ffe44d;
+  --yellow-200: #ffec80;
+  --yellow-100: #fff5cc;
+  --yellow-50: #fffbeb;
+  
+  /* Text Colors for Light Mode (yellow bg) */
+  --text-primary: #000000;
+  --text-secondary: #111111;
+  --text-muted: #333333;
+  --text-accent: #c99700;
+  
+  /* Accent colors */
+  --accent-blue: #234b8a;
+  --accent-yellow: #e6ad00;
+  --accent-gold: #d4a000;
 }
 
 html {
@@ -13,13 +49,35 @@ html {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system;
-  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-handwritten: var(--font-caveat), cursive;
+
+  --color-modena-yellow: #ffde00;
+  --color-modena-blue: #0d1b3c;
+
+  /* Override zinc colors for better visibility */
+  --color-zinc-50: #fffbeb;
+  --color-zinc-100: #fff5cc;
+  --color-zinc-200: #ffec80;
+  --color-zinc-300: #ffe44d;
+  --color-zinc-400: #ffc107;
+  --color-zinc-500: #234b8a;
+  --color-zinc-600: #1a3a6e;
+  --color-zinc-700: #132952;
+  --color-zinc-800: #0d1b3c;
+  --color-zinc-900: #0a1628;
+  --color-zinc-950: #050c18;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
-    --foreground: #ffffff;
+    --background: #0d1b3c;
+    --foreground: #ffde00;
+    
+    /* Text Colors for Dark Mode (blue bg) */
+    --text-primary: #ffde00;
+    --text-secondary: #ffe44d;
+    --text-muted: #c4d5f2;
+    --text-accent: #ffc107;
   }
 }
 
@@ -29,10 +87,99 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-.font-serif {
-  font-family: var(--font-serif);
+.font-handwritten {
+  font-family: var(--font-handwritten);
 }
 
-@import "mapbox-gl/dist/mapbox-gl.css";
+/* Enhanced text visibility classes */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-accent {
+  color: var(--text-accent);
+}
+
+/* Fancy text shadows for better visibility */
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 222, 0, 0.3), 0 0 40px rgba(255, 222, 0, 0.1);
+}
+
+.text-sharp {
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Better opacity classes that maintain readability */
+.opacity-soft {
+  opacity: 0.85;
+}
+
+.opacity-medium {
+  opacity: 0.7;
+}
+
+.opacity-subtle {
+  opacity: 0.55;
+}
+
+/* Gradient text effects */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #ffc107 0%, #ffde00 50%, #ffe44d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #0d1b3c 0%, #234b8a 50%, #3366b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dark mode gradient adjustments */
+@media (prefers-color-scheme: dark) {
+  .text-glow {
+    text-shadow: 0 0 30px rgba(255, 222, 0, 0.4), 0 0 60px rgba(255, 193, 7, 0.2);
+  }
+  
+  .text-sharp {
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Wavy route-like transitions */
+@keyframes route-draw {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.route-line {
+  stroke-dasharray: 1000;
+  animation: route-draw 2s ease-in-out forwards;
+}
+
+/* Antimanieristic random rotations */
+.antimanieristic {
+  transform: rotate(calc(var(--random-rotation, 0) * 1deg));
+  transition: transform 0.3s ease-out;
+}
+
+.antimanieristic:hover {
+  transform: rotate(calc(var(--random-rotation, 0) * 1.5deg)) scale(1.02);
+}

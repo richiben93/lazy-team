@@ -1,5 +1,13 @@
 [
   {
+    "slug": "luca-stancari",
+    "name": "Luca Stancari",
+    "nickname": "Stanca 🐟",
+    "role": "President",
+    "bio": "L'uomo che ha fondato il LT. Chiamato Stanchino dagli amici.",
+    "avatar": "/images/members/stanca.jpg"
+  },
+  {
     "slug": "marco",
     "name": "Marco Sprint",
     "nickname": "The Bullet",

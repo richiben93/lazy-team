@@ -55,12 +55,12 @@ export default function TripCard({ trip, index }: TripCardProps) {
         </div>
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="text-xl font-bold tracking-tight group-hover:opacity-60 transition-opacity">{trip.title}</h3>
-            <p className="text-sm opacity-50 font-medium">{trip.location} — {new Date(trip.date).getFullYear()}</p>
+            <h3 className="text-xl font-bold tracking-tight group-hover:text-muted transition-colors">{trip.title}</h3>
+            <p className="text-sm text-secondary font-medium">{trip.location} — {new Date(trip.date).getFullYear()}</p>
           </div>
           <div className="text-right">
             <p className="text-sm font-bold">{(trip.stats.distance / 1000).toFixed(0)}km</p>
-            <p className="text-[10px] uppercase tracking-widest opacity-30 font-bold">{trip.stats.elevationGain}m+</p>
+            <p className="text-[10px] uppercase tracking-widest text-muted font-bold">{trip.stats.elevationGain}m+</p>
           </div>
         </div>
       </Link>
