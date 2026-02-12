@@ -1,4 +1,4 @@
-import { getTrips } from "@/lib/content";
+import { getTrips, getMembers } from "@/lib/content";
 import FilterableTrips from "./FilterableTrips";
 
 export const metadata = {
@@ -8,6 +8,7 @@ export const metadata = {
 
 export default async function TripsPage() {
   const trips = await getTrips();
+  const members = await getMembers();
 
   return (
     <div className="pt-40 pb-32 px-6">
@@ -20,7 +21,7 @@ export default async function TripsPage() {
           </p>
         </header>
 
-        <FilterableTrips initialTrips={trips} />
+        <FilterableTrips initialTrips={trips} members={members} />
       </div>
     </div>
   );

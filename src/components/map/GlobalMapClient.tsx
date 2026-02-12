@@ -1,11 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Trip } from "@/types";
+import { Trip, Member } from "@/types";
 
-// Use the FREE version - no API keys needed!
-const FreeGlobalMap = dynamic(() => import("./FreeGlobalMap"), { ssr: false });
+// Use Mapbox GL JS for beautiful, responsive maps
+const MapboxGlobalMap = dynamic(() => import("./MapboxGlobalMap"), { ssr: false });
 
-export default function GlobalMapClient({ trips }: { trips: Trip[] }) {
-  return <FreeGlobalMap trips={trips} />;
+export default function GlobalMapClient({ trips, members }: { trips: Trip[]; members: Member[] }) {
+  return <MapboxGlobalMap trips={trips} members={members} />;
 }

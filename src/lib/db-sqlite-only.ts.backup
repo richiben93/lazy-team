@@ -1,0 +1,160 @@
+import Database from 'better-sqlite3';
+import path from 'path';
+import bcrypt from 'bcryptjs';
+
+const dbPath = path.join(process.cwd(), 'data', 'admins.db');
+const db = new Database(dbPath);
+
+// Create admins table
+db.exec(`
+  CREATE TABLE IF NOT EXISTS admins (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
+export interface Admin {
+  id: number;
+  username: string;
+  name: string;
+  email?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminWithPassword extends Admin {
+  password_hash: string;
+}
+
+// Get all admins
+export function getAllAdmins(): Admin[] {
+  const stmt = db.prepare('SELECT id, username, name, email, created_at, updated_at FROM admins');
+  return stmt.all() as Admin[];
+}
+
+// Get admin by username
+export function getAdminByUsername(username: string): AdminWithPassword | null {
+  const stmt = db.prepare('SELECT * FROM admins WHERE username = ?');
+  return stmt.get(username) as AdminWithPassword | null;
+}
+
+// Get admin by ID
+export function getAdminById(id: number): Admin | null {
+  const stmt = db.prepare('SELECT id, username, name, email, created_at, updated_at FROM admins WHERE id = ?');
+  return stmt.get(id) as Admin | null;
+}
+
+// Create admin
+export function createAdmin(username: string, password: string, name: string, email?: string): Admin {
+  const passwordHash = bcrypt.hashSync(password, 12);
+  const stmt = db.prepare(`
+    INSERT INTO admins (username, password_hash, name, email)
+    VALUES (?, ?, ?, ?)
+  `);
+  
+  const result = stmt.run(username, passwordHash, name, email || null);
+  const admin = getAdminById(result.lastInsertRowid as number);
+  
+  if (!admin) {
+    throw new Error('Failed to create admin');
+  }
+  
+  return admin;
+}
+
+// Update admin
+export function updateAdmin(id: number, data: Partial<Omit<Admin, 'id' | 'created_at' | 'updated_at'>>): Admin | null {
+  const fields: string[] = [];
+  const values: any[] = [];
+  
+  if (data.username) {
+    fields.push('username = ?');
+    values.push(data.username);
+  }
+  if (data.name) {
+    fields.push('name = ?');
+    values.push(data.name);
+  }
+  if (data.email !== undefined) {
+    fields.push('email = ?');
+    values.push(data.email || null);
+  }
+  
+  if (fields.length === 0) {
+    return getAdminById(id);
+  }
+  
+  fields.push('updated_at = CURRENT_TIMESTAMP');
+  values.push(id);
+  
+  const stmt = db.prepare(`
+    UPDATE admins
+    SET ${fields.join(', ')}
+    WHERE id = ?
+  `);
+  
+  stmt.run(...values);
+  return getAdminById(id);
+}
+
+// Update password
+export function updateAdminPassword(id: number, newPassword: string): void {
+  const passwordHash = bcrypt.hashSync(newPassword, 12);
+  const stmt = db.prepare(`
+    UPDATE admins
+    SET password_hash = ?, updated_at = CURRENT_TIMESTAMP
+    WHERE id = ?
+  `);
+  stmt.run(passwordHash, id);
+}
+
+// Delete admin
+export function deleteAdmin(id: number): void {
+  const stmt = db.prepare('DELETE FROM admins WHERE id = ?');
+  stmt.run(id);
+}
+
+// Verify password
+export function verifyAdminPassword(username: string, password: string): Admin | null {
+  const admin = getAdminByUsername(username);
+  if (!admin) return null;
+  
+  const isValid = bcrypt.compareSync(password, admin.password_hash);
+  if (!isValid) return null;
+  
+  const { password_hash, ...adminWithoutPassword } = admin;
+  return adminWithoutPassword as Admin;
+}
+
+// Count admins
+export function countAdmins(): number {
+  const stmt = db.prepare('SELECT COUNT(*) as count FROM admins');
+  const result = stmt.get() as { count: number };
+  return result.count;
+}
+
+// Initialize first admin if database is empty
+export function initializeFirstAdmin(): void {
+  const count = countAdmins();
+  
+  if (count === 0) {
+    const defaultUsername = process.env.ADMIN_USERNAME || 'admin';
+    const defaultPassword = process.env.ADMIN_PASSWORD || 'changeme';
+    const defaultName = 'Administrator';
+    
+    console.log('Creating first admin user...');
+    createAdmin(defaultUsername, defaultPassword, defaultName);
+    console.log(`✅ First admin created: ${defaultUsername}`);
+    console.log('⚠️  Please change the password immediately!');
+  }
+}
+
+// Initialize database
+initializeFirstAdmin();
+
+export default db;

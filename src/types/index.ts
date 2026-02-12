@@ -4,6 +4,9 @@ export interface TripStats {
   bounds: [[number, number], [number, number]] | null;
 }
 
+export type TripType = 'one-day' | 'overnight' | 'multi-day';
+export type TerrainType = 'road' | 'gravel' | 'mtb' | 'mixed';
+
 export interface Trip {
   slug: string;
   title: string;
@@ -16,6 +19,9 @@ export interface Trip {
   photos?: string[];
   stats: TripStats;
   geojsonUrl: string;
+  author: string; // Member slug
+  type: TripType;
+  terrain: TerrainType;
 }
 
 export interface Member {
@@ -25,4 +31,18 @@ export interface Member {
   role: string;
   bio: string;
   avatar: string;
+  emoji: string; // Emoji per identificare il Lazer
+  isAdmin?: boolean; // Flag per admin
 }
+
+export interface AboutContent {
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  values: {
+    title: string;
+    description: string;
+  }[];
+}
+

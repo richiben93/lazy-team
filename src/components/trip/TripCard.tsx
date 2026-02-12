@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from "framer-motion";
 import { Trip } from "@/types";
 import { useRef } from "react";
 
@@ -19,20 +19,26 @@ export default function TripCard({ trip, index }: TripCardProps) {
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const yRaw = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const y = useSpring(yRaw, { stiffness: 100, damping: 30, mass: 0.5 });
 
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-100px" }}
       transition={{ delay: index * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link href={`/trips/${trip.slug}`} className="group block">
         <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-zinc-100 mb-6">
           <motion.div 
-            style={{ y: prefersReducedMotion ? 0 : y, height: "120%", top: "-10%" }} 
+            style={{ 
+              y: prefersReducedMotion ? 0 : y, 
+              height: "120%", 
+              top: "-10%",
+              willChange: "transform"
+            }} 
             className="absolute inset-0"
           >
             <Image

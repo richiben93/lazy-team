@@ -20,26 +20,30 @@ export default function FreeGlobalMap({ trips }: GlobalMapProps) {
 
   useEffect(() => {
     // Load all trip GeoJSON data
-    trips.forEach(async (trip) => {
-      try {
-        const res = await fetch(trip.geojsonUrl);
-        const data = await res.json();
-        
-        // Extract coordinates from GeoJSON
-        if (data.features && data.features[0]?.geometry?.coordinates) {
-          const coords = data.features[0].geometry.coordinates.map((coord: number[]) => 
-            [coord[1], coord[0]] as [number, number] // Leaflet uses [lat, lng]
-          );
-          setTripRoutes(prev => ({ ...prev, [trip.slug]: coords }));
+    const loadRoutes = async () => {
+      for (const trip of trips) {
+        try {
+          const res = await fetch(trip.geojsonUrl);
+          const data = await res.json();
+          
+          // Extract coordinates from GeoJSON
+          if (data.features && data.features[0]?.geometry?.coordinates) {
+            const coords = data.features[0].geometry.coordinates.map((coord: number[]) => 
+              [coord[1], coord[0]] as [number, number] // Leaflet uses [lat, lng]
+            );
+            setTripRoutes(prev => ({ ...prev, [trip.slug]: coords }));
+          }
+        } catch (error) {
+          console.error(`Failed to load route for ${trip.slug}:`, error);
         }
-      } catch (error) {
-        console.error(`Failed to load route for ${trip.slug}:`, error);
       }
-    });
+    };
+    
+    loadRoutes();
   }, [trips]);
 
   return (
-    <div className="h-[70vh] w-full rounded-3xl overflow-hidden relative border border-foreground/5 shadow-2xl">
+    <div className="h-[70vh] w-full rounded-3xl overflow-hidden relative border border-foreground/5 shadow-2xl z-0">
       <FreeMapContainer 
         initialViewState={{ latitude: 45, longitude: 7, zoom: 5 }}
         scrollZoom={false}
@@ -54,26 +58,26 @@ export default function FreeGlobalMap({ trips }: GlobalMapProps) {
               key={trip.slug}
               positions={route}
               pathOptions={{
-                color: '#000000',
-                weight: 3,
-                opacity: 0.7,
+                color: '#FFC107',
+                weight: 4,
+                opacity: 0.8,
               }}
               eventHandlers={{
                 click: () => setSelectedTrip(trip),
                 mouseover: (e) => {
                   const layer = e.target;
                   layer.setStyle({
-                    color: '#1743C6',
-                    weight: 5,
+                    color: '#FFDE00',
+                    weight: 6,
                     opacity: 1,
                   });
                 },
                 mouseout: (e) => {
                   const layer = e.target;
                   layer.setStyle({
-                    color: '#000000',
-                    weight: 3,
-                    opacity: 0.7,
+                    color: '#FFC107',
+                    weight: 4,
+                    opacity: 0.8,
                   });
                 }
               }}
