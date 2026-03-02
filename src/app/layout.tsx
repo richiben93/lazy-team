@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caveat, Inter } from "next/font/google";
+import { Caveat, Inter, Lora } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,8 +16,15 @@ const caveat = Caveat({
   weight: ["400", "500", "600", "700"],
 });
 
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
-  title: "LAZY TEAM 🌽",
+  title: "LAZY TEAM",
   description: "Ciclismo avventuroso, esplorativo, antimanieristico. est. Modena 2016.",
 };
 
@@ -27,9 +34,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="it">
       <body
-        className={`${inter.variable} ${caveat.variable} antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} ${caveat.variable} ${lora.variable} antialiased min-h-screen flex flex-col`}
       >
         <SmoothScrollProvider>
           <Header />

@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Verify against database
-        const admin = verifyAdminPassword(username, password);
+        const admin = await verifyAdminPassword(username, password);
         
         if (!admin) {
           return null;

@@ -32,6 +32,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
     <article className="pt-20">
       {/* Hero Section */}
       <header className="relative h-[80vh] w-full overflow-hidden flex items-end">
+        <div className="absolute inset-0 bg-zinc-200 dark:bg-zinc-800 animate-pulse" />
         <Image 
           src={trip.coverImage} 
           alt={trip.title} 
@@ -46,11 +47,11 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
             href="/trips" 
             className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors text-xs font-bold uppercase tracking-[0.2em] mb-8 group"
           >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" /> Back to trips
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" /> Torna ai viaggi
           </Link>
           <div className="flex flex-wrap gap-3 mb-6">
             {trip.tags.map(tag => (
-              <span key={tag} className="px-3 py-1 bg-white/20 backdrop-blur-md text-white rounded-full text-[10px] font-bold uppercase tracking-widest">
+              <span key={tag} className="px-3 py-1 bg-white/20 backdrop-blur-md text-white rounded-full text-xs font-bold uppercase tracking-widest">
                 {tag}
               </span>
             ))}
@@ -60,10 +61,10 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
           </h1>
           
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 pt-8 border-t border-white/20">
-            <StatItem icon={Calendar} label="Date" value={new Date(trip.date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} />
-            <StatItem icon={MapPin} label="Location" value={trip.location} />
-            <StatItem icon={Ruler} label="Distance" value={`${(trip.stats.distance / 1000).toFixed(1)} km`} />
-            <StatItem icon={TrendingUp} label="Elevation" value={`${trip.stats.elevationGain} m+`} />
+            <StatItem icon={Calendar} label="Data" value={new Date(trip.date).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' })} />
+            <StatItem icon={MapPin} label="Luogo" value={trip.location} />
+            <StatItem icon={Ruler} label="Distanza" value={`${(trip.stats.distance / 1000).toFixed(1)} km`} />
+            <StatItem icon={TrendingUp} label="Dislivello" value={`${trip.stats.elevationGain} m+`} />
           </div>
         </div>
       </header>
@@ -77,7 +78,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
             </div>
             <div className="flex flex-col justify-between">
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted mb-8">Route Profile</h3>
+                <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted mb-8">Profilo altimetrico</h3>
                 <ElevationChart geojsonUrl={trip.geojsonUrl} />
               </div>
               <div className="mt-12 p-8 bg-white dark:bg-black rounded-3xl border border-foreground/5">
@@ -106,7 +107,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
           {prevTrip && (
             <Link href={`/trips/${prevTrip.slug}`} className="flex-1 group">
               <div className="p-12 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-foreground/5 transition-all hover:border-foreground/20">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted block mb-4">Previous Trip</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-muted block mb-4">Viaggio precedente</span>
                 <h4 className="text-2xl font-bold tracking-tight flex items-center gap-4">
                   <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-2" />
                   {prevTrip.title}
@@ -117,7 +118,7 @@ export default async function TripDetailPage(props: { params: Promise<{ slug: st
           {nextTrip && (
             <Link href={`/trips/${nextTrip.slug}`} className="flex-1 group text-right">
               <div className="p-12 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-foreground/5 transition-all hover:border-foreground/20">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted block mb-4">Next Trip</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-muted block mb-4">Viaggio successivo</span>
                 <h4 className="text-2xl font-bold tracking-tight flex items-center justify-end gap-4">
                   {nextTrip.title}
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
@@ -136,7 +137,7 @@ function StatItem({ icon: Icon, label, value }: { icon: React.ElementType, label
     <div className="text-white">
       <div className="flex items-center gap-2 text-white/80 mb-2">
         <Icon className="w-3 h-3" />
-        <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
+        <span className="text-xs font-bold uppercase tracking-widest">{label}</span>
       </div>
       <p className="text-xl font-bold tracking-tight">{value}</p>
     </div>

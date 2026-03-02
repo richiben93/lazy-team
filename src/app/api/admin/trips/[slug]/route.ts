@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import { removeTrip, sanitizeTripInput, updateTrip } from '@/lib/admin-content';
 import { requireAdminSession } from '@/lib/admin-access';
@@ -34,13 +34,13 @@ async function readTripPayload(request: Request) {
   return request.json();
 }
 
-export async function PUT(request: Request, context: { params: { slug: string } }) {
+export async function PUT(request: NextRequest, context: { params: Promise<{ slug: string }> }) {
   const session = await requireAdminSession();
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const slug = context.params.slug;
+  const { slug } = await context.params;
   if (!slug) {
     return NextResponse.json({ error: 'Missing slug' }, { status: 400 });
   }
@@ -84,13 +84,13 @@ export async function PUT(request: Request, context: { params: { slug: string } 
   }
 }
 
-export async function DELETE(_request: Request, context: { params: { slug: string } }) {
+export async function DELETE(_request: NextRequest, context: { params: Promise<{ slug: string }> }) {
   const session = await requireAdminSession();
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const slug = context.params.slug;
+  const { slug } = await context.params;
   if (!slug) {
     return NextResponse.json({ error: 'Missing slug' }, { status: 400 });
   }

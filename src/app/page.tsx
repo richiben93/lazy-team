@@ -40,6 +40,7 @@ export default async function Home() {
         <div className="relative z-10 text-center max-w-5xl flex flex-col items-center">
           <SectionReveal>
             <div className="relative w-48 h-48 md:w-64 md:h-64 mb-12 rounded-full overflow-hidden border-4 border-foreground shadow-2xl">
+              <div className="absolute inset-0 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-full" />
               <Image 
                 src="/stemma.jpg" 
                 alt="Lazy Team Logo" 
@@ -51,7 +52,7 @@ export default async function Home() {
           </SectionReveal>
           <div className="mt-8 flex flex-col items-center">
             <Parallax offset={40}>
-              <h1 className="text-[12vw] md:text-[10vw] font-bold tracking-tight leading-tight mb-16 font-handwritten text-black">
+              <h1 className="text-[clamp(3rem,12vw,10rem)] font-bold tracking-tight leading-tight mb-16 font-handwritten text-black">
                 <TextReveal>Lazy Team</TextReveal>
               </h1>
             </Parallax>
@@ -73,13 +74,13 @@ export default async function Home() {
                 href="/trips" 
                 className="bg-foreground text-background px-10 py-5 rounded-full text-sm font-bold uppercase tracking-widest hover:scale-105 transition-transform flex items-center gap-3"
               >
-                Explore our rides <ArrowRight className="w-4 h-4" />
+                Esplora i viaggi <ArrowRight className="w-4 h-4" />
               </Link>
               <Link 
-                href="/about" 
+                href="/members" 
                 className="px-10 py-5 rounded-full text-sm font-bold uppercase tracking-widest border border-foreground/10 hover:bg-foreground/5 transition-colors"
               >
-                The Team
+                Il Team
               </Link>
             </div>
           </SectionReveal>

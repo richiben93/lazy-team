@@ -2,8 +2,8 @@ import Image from "next/image";
 import { getAboutContent } from "@/lib/about-content";
 
 export const metadata = {
-  title: "About — LAZY TEAM 🌽",
-  description: "Learn more about the mission and history of Lazy Team.",
+  title: "Chi siamo — LAZY TEAM",
+  description: "Scopri la missione e la storia del Lazy Team.",
 };
 
 export default function AboutPage() {

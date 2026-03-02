@@ -61,9 +61,9 @@ export default function ElevationChart({ geojsonUrl }: ElevationChartProps) {
 
   return (
     <div className="w-full">
-      <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-muted mb-4">
+      <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-muted mb-4">
         <span>0 km</span>
-        <span>Elevation Profile</span>
+        <span>Profilo altimetrico</span>
         <span>{(chartData.totalDist / 1000).toFixed(1)} km</span>
       </div>
       <svg 
@@ -76,7 +76,7 @@ export default function ElevationChart({ geojsonUrl }: ElevationChartProps) {
       </svg>
       <div className="mt-4 flex justify-between items-end">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-muted">Peak</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-muted">Cima</p>
           <p className="text-sm font-bold">{chartData.maxEle.toFixed(0)}m</p>
         </div>
       </div>

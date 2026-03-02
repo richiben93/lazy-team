@@ -34,16 +34,16 @@ const QUICK_FILTERS = {
 };
 
 const TRIP_TYPES: Array<{ value: TripType; label: string; emoji: string }> = [
-  { value: 'one-day', label: 'One Day', emoji: '☀️' },
-  { value: 'overnight', label: 'Overnight', emoji: '🌙' },
-  { value: 'multi-day', label: 'Multi-Day', emoji: '🏕️' },
+  { value: 'one-day', label: 'Giornata', emoji: '☀️' },
+  { value: 'overnight', label: 'Pernottamento', emoji: '🌙' },
+  { value: 'multi-day', label: 'Più giorni', emoji: '🏕️' },
 ];
 
 const TERRAIN_TYPES: Array<{ value: TerrainType; label: string; emoji: string }> = [
-  { value: 'road', label: 'Road', emoji: '🛣️' },
+  { value: 'road', label: 'Strada', emoji: '🛣️' },
   { value: 'gravel', label: 'Gravel', emoji: '🪨' },
   { value: 'mtb', label: 'MTB', emoji: '⛰️' },
-  { value: 'mixed', label: 'Mixed', emoji: '🔀' },
+  { value: 'mixed', label: 'Misto', emoji: '🔀' },
 ];
 
 export default function TripFiltersComponent({ filters, onFiltersChange, availableAuthors }: TripFiltersProps) {
@@ -96,14 +96,14 @@ export default function TripFiltersComponent({ filters, onFiltersChange, availab
   return (
     <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-bold uppercase tracking-widest text-black/70">Filters</h3>
+        <h3 className="text-xs font-bold uppercase tracking-widest text-black/70">Filtri</h3>
         {hasActiveFilters && (
           <button
             onClick={clearFilters}
             className="text-xs font-bold text-red-600 hover:text-red-700 flex items-center gap-1"
           >
             <X className="w-3 h-3" />
-            Clear
+            Rimuovi
           </button>
         )}
       </div>
@@ -131,7 +131,7 @@ export default function TripFiltersComponent({ filters, onFiltersChange, availab
 
       {/* Trip Type Filter */}
       <div>
-        <h4 className="text-xs font-bold text-black/60 mb-2">Duration</h4>
+        <h4 className="text-xs font-bold text-black/60 mb-2">Durata</h4>
         <div className="flex flex-wrap gap-2">
           {TRIP_TYPES.map(type => (
             <button
@@ -152,7 +152,7 @@ export default function TripFiltersComponent({ filters, onFiltersChange, availab
 
       {/* Terrain Filter */}
       <div>
-        <h4 className="text-xs font-bold text-black/60 mb-2">Terrain</h4>
+        <h4 className="text-xs font-bold text-black/60 mb-2">Terreno</h4>
         <div className="flex flex-wrap gap-2">
           {TERRAIN_TYPES.map(terrain => (
             <button
@@ -173,7 +173,7 @@ export default function TripFiltersComponent({ filters, onFiltersChange, availab
 
       {/* Distance Filter */}
       <div>
-        <h4 className="text-xs font-bold text-black/60 mb-2">Distance</h4>
+        <h4 className="text-xs font-bold text-black/60 mb-2">Distanza</h4>
         <div className="grid grid-cols-2 gap-2">
           {QUICK_FILTERS.distance.map(option => (
             <button
@@ -193,7 +193,7 @@ export default function TripFiltersComponent({ filters, onFiltersChange, availab
 
       {/* Elevation Filter */}
       <div>
-        <h4 className="text-xs font-bold text-black/60 mb-2">Elevation Gain</h4>
+        <h4 className="text-xs font-bold text-black/60 mb-2">Dislivello</h4>
         <div className="grid grid-cols-2 gap-2">
           {QUICK_FILTERS.elevation.map(option => (
             <button

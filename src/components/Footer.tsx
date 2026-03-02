@@ -17,9 +17,9 @@ export default function Footer() {
           <h2 className="text-4xl md:text-6xl font-black tracking-tight uppercase font-handwritten flex items-center gap-2 text-glow">Lazy Team 🌽</h2>
           <div className="flex flex-wrap gap-x-8 gap-y-4 text-xs font-bold uppercase tracking-[0.3em] text-yellow-200">
             <Link href="/trips" className="hover:text-yellow-100 transition-colors">viaggi</Link>
-            <Link href="/members" className="hover:text-yellow-100 transition-colors">laziers</Link>
-            <Link href="/about" className="hover:text-yellow-100 transition-colors">about</Link>
-            <a href="https://www.instagram.com/lazy.team_erman.bike/" className="hover:text-yellow-100 transition-colors">instagram</a>
+            <Link href="/members" className="hover:text-yellow-100 transition-colors">membri</Link>
+            <Link href="/about" className="hover:text-yellow-100 transition-colors">chi siamo</Link>
+            <a href="https://www.instagram.com/lazy.team_erman.bike/" className="hover:text-yellow-100 transition-colors" target="_blank" rel="noopener noreferrer">instagram</a>
           </div>
         </div>
         
@@ -27,7 +27,7 @@ export default function Footer() {
           <p className="text-sm font-handwritten italic text-yellow-200 mb-4">
             forgiato nel laboratorio della strada aperta
           </p>
-          <div className="text-[10px] font-bold uppercase tracking-[0.4em] text-yellow-300/60">
+          <div className="text-xs font-bold uppercase tracking-[0.4em] text-yellow-300/60">
             © 2026 lazy team — ciclismo antimanieristico
           </div>
         </div>

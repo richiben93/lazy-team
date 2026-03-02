@@ -12,17 +12,23 @@ interface FilterableTripsProps {
 
 type SortOption = "newest" | "longest" | "elevation";
 
+const SORT_LABELS: Record<SortOption, string> = {
+  newest: "Recenti",
+  longest: "Distanza",
+  elevation: "Dislivello",
+};
+
 const TRIP_TYPES: Array<{ value: TripType; label: string; emoji: string }> = [
-  { value: 'one-day', label: 'One Day', emoji: '☀️' },
-  { value: 'overnight', label: 'Overnight', emoji: '🌙' },
-  { value: 'multi-day', label: 'Multi-Day', emoji: '🏕️' },
+  { value: 'one-day', label: 'Giornata', emoji: '☀️' },
+  { value: 'overnight', label: 'Pernottamento', emoji: '🌙' },
+  { value: 'multi-day', label: 'Più giorni', emoji: '🏕️' },
 ];
 
 const TERRAIN_TYPES: Array<{ value: TerrainType; label: string; emoji: string }> = [
-  { value: 'road', label: 'Road', emoji: '🛣️' },
+  { value: 'road', label: 'Strada', emoji: '🛣️' },
   { value: 'gravel', label: 'Gravel', emoji: '🪨' },
   { value: 'mtb', label: 'MTB', emoji: '⛰️' },
-  { value: 'mixed', label: 'Mixed', emoji: '🔀' },
+  { value: 'mixed', label: 'Misto', emoji: '🔀' },
 ];
 
 export default function FilterableTrips({ initialTrips, members }: FilterableTripsProps) {
@@ -60,23 +66,13 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
   const filteredTrips = useMemo(() => {
     return initialTrips
       .filter((trip) => {
-        // Search filter
         const matchesSearch = trip.title.toLowerCase().includes(search.toLowerCase()) || 
                              trip.location.toLowerCase().includes(search.toLowerCase());
-        
-        // Tag filter
         const matchesTag = selectedTag ? trip.tags.includes(selectedTag) : true;
-        
-        // Author filter
         const matchesAuthor = selectedAuthors.length === 0 || selectedAuthors.includes(trip.author);
-        
-        // Type filter
         const matchesType = selectedTypes.length === 0 || selectedTypes.includes(trip.type);
-        
-        // Terrain filter
         const matchesTerrain = selectedTerrains.length === 0 || selectedTerrains.includes(trip.terrain);
         
-        // Distance filter
         let matchesDistance = true;
         if (distanceFilter !== 'all') {
           const distanceKm = trip.stats.distance / 1000;
@@ -86,7 +82,6 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
           else if (distanceFilter === '>500') matchesDistance = distanceKm >= 500;
         }
         
-        // Elevation filter
         let matchesElevation = true;
         if (elevationFilter !== 'all') {
           const elevation = trip.stats.elevationGain;
@@ -144,7 +139,7 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
             <input
               type="text"
-              placeholder="Search trips..."
+              placeholder="Cerca viaggi..."
               className="w-full pl-12 pr-4 py-4 bg-zinc-50 dark:bg-zinc-950 border border-foreground/5 rounded-2xl focus:outline-none focus:ring-1 focus:ring-foreground/20 text-sm"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -152,46 +147,47 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
           </div>
 
           <div className="flex gap-4 items-center">
-            <div className="flex bg-zinc-50 dark:bg-zinc-950 p-1 rounded-xl border border-foreground/5">
+            <div className="flex bg-zinc-50 dark:bg-zinc-950 p-1 rounded-xl border border-foreground/5 overflow-x-auto">
               {(["newest", "longest", "elevation"] as SortOption[]).map((option) => (
                 <button
                   key={option}
                   onClick={() => setSortBy(option)}
-                  className={`px-4 py-2 text-[10px] uppercase tracking-widest font-bold rounded-lg transition-colors ${
+                  className={`px-4 py-2 text-xs uppercase tracking-widest font-bold rounded-lg transition-colors whitespace-nowrap ${
                     sortBy === option ? "bg-foreground text-background" : "hover:bg-foreground/5 text-secondary"
                   }`}
                 >
-                  {option}
+                  {SORT_LABELS[option]}
                 </button>
               ))}
             </div>
 
             <button
               onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-              className={`p-3 rounded-xl transition-colors ${
+              className={`p-3 rounded-xl transition-colors flex-shrink-0 ${
                 showAdvancedFilters ? 'bg-blue-600 text-white' : 'bg-zinc-50 dark:bg-zinc-950 border border-foreground/5 hover:bg-zinc-100'
               }`}
+              aria-label={showAdvancedFilters ? "Chiudi filtri" : "Apri filtri avanzati"}
             >
               {showAdvancedFilters ? <X className="w-4 h-4" /> : <Filter className="w-4 h-4" />}
             </button>
           </div>
         </div>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 justify-center">
+        {/* Tags - horizontal scroll on mobile */}
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-2 px-2 scrollbar-hide">
           <button
             onClick={() => setSelectedTag(null)}
-            className={`px-4 py-2 text-[10px] uppercase tracking-widest font-bold rounded-full border transition-colors ${
+            className={`px-4 py-2 text-xs uppercase tracking-widest font-bold rounded-full border transition-colors whitespace-nowrap flex-shrink-0 ${
               selectedTag === null ? "bg-foreground text-background border-foreground" : "border-foreground/20 text-secondary hover:text-foreground"
             }`}
           >
-            All
+            Tutti
           </button>
           {tags.map((tag) => (
             <button
               key={tag}
               onClick={() => setSelectedTag(tag)}
-              className={`px-4 py-2 text-[10px] uppercase tracking-widest font-bold rounded-full border transition-colors ${
+              className={`px-4 py-2 text-xs uppercase tracking-widest font-bold rounded-full border transition-colors whitespace-nowrap flex-shrink-0 ${
                 selectedTag === tag ? "bg-foreground text-background border-foreground" : "border-foreground/20 text-secondary hover:text-foreground"
               }`}
             >
@@ -204,14 +200,14 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
         {showAdvancedFilters && (
           <div className="bg-zinc-50 dark:bg-zinc-950 rounded-2xl p-6 space-y-6 border border-foreground/5">
             <div className="flex justify-between items-center">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-muted">Advanced Filters</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-muted">Filtri avanzati</h3>
               {hasAdvancedFilters && (
                 <button
                   onClick={clearAdvancedFilters}
                   className="text-xs font-bold text-red-600 hover:text-red-700 flex items-center gap-1"
                 >
                   <X className="w-3 h-3" />
-                  Clear
+                  Rimuovi
                 </button>
               )}
             </div>
@@ -239,7 +235,7 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
 
             {/* Duration Filter */}
             <div>
-              <h4 className="text-xs font-bold text-muted mb-2">Duration</h4>
+              <h4 className="text-xs font-bold text-muted mb-2">Durata</h4>
               <div className="flex flex-wrap gap-2">
                 {TRIP_TYPES.map(type => (
                   <button
@@ -260,7 +256,7 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
 
             {/* Terrain Filter */}
             <div>
-              <h4 className="text-xs font-bold text-muted mb-2">Terrain</h4>
+              <h4 className="text-xs font-bold text-muted mb-2">Terreno</h4>
               <div className="flex flex-wrap gap-2">
                 {TERRAIN_TYPES.map(terrain => (
                   <button
@@ -282,7 +278,7 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
             {/* Distance and Elevation Filters */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="text-xs font-bold text-muted mb-2">Distance</h4>
+                <h4 className="text-xs font-bold text-muted mb-2">Distanza</h4>
                 <div className="flex flex-wrap gap-2">
                   {(['<100', '100-300', '300-500', '>500'] as const).map(range => (
                     <button
@@ -301,7 +297,7 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
               </div>
 
               <div>
-                <h4 className="text-xs font-bold text-muted mb-2">Elevation</h4>
+                <h4 className="text-xs font-bold text-muted mb-2">Dislivello</h4>
                 <div className="flex flex-wrap gap-2">
                   {(['<1000', '1000-3000', '3000-5000', '>5000'] as const).map(range => (
                     <button
@@ -325,8 +321,14 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
         {/* Results count */}
         <div className="text-center">
           <p className="text-sm text-muted">
-            Showing <span className="font-bold text-foreground">{filteredTrips.length}</span> of{" "}
-            <span className="font-bold text-foreground">{initialTrips.length}</span> trips
+            {filteredTrips.length === initialTrips.length ? (
+              <><span className="font-bold text-foreground">{initialTrips.length}</span> viaggi</>
+            ) : (
+              <>
+                <span className="font-bold text-foreground">{filteredTrips.length}</span> di{" "}
+                <span className="font-bold text-foreground">{initialTrips.length}</span> viaggi
+              </>
+            )}
           </p>
         </div>
       </div>
@@ -339,7 +341,7 @@ export default function FilterableTrips({ initialTrips, members }: FilterableTri
         </div>
       ) : (
         <div className="py-40 text-center">
-          <p className="text-xl text-muted">No trips found matching your criteria.</p>
+          <p className="text-xl text-muted">Nessun viaggio trovato con i criteri selezionati.</p>
         </div>
       )}
     </div>

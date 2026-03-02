@@ -46,19 +46,13 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Performance optimizations for scroll animations */
-* {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-/* GPU acceleration for animated elements */
+/* GPU acceleration only for animated elements (not universal) */
 [style*="transform"],
 [class*="motion"],
-[class*="parallax"],
-.group:hover > * {
+[class*="parallax"] {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   will-change: transform;
-  transform: translateZ(0);
 }
 
 /* Optimize Lenis smooth scroll container */
@@ -87,6 +81,7 @@ html.lenis {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system;
   --font-handwritten: var(--font-caveat), cursive;
+  --font-serif: var(--font-lora), Georgia, "Times New Roman", serif;
 
   --color-modena-yellow: #ffde00;
   --color-modena-blue: #0d1b3c;
@@ -300,5 +295,15 @@ body {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Hide scrollbar for horizontal scroll containers */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 

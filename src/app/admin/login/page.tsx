@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Shield } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 
-export default function AdminLoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/admin';
@@ -85,5 +85,23 @@ export default function AdminLoginPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+          <div className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 w-full max-w-md border border-slate-700 shadow-2xl animate-pulse">
+            <div className="h-16 w-16 bg-slate-700 rounded-full mx-auto mb-4" />
+            <div className="h-8 bg-slate-700 rounded w-1/2 mx-auto mb-2" />
+            <div className="h-4 bg-slate-700 rounded w-2/3 mx-auto" />
+          </div>
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

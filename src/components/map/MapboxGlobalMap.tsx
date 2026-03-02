@@ -230,19 +230,19 @@ export default function MapboxGlobalMap({ trips, members }: MapboxGlobalMapProps
                       </span>
                     </div>
                     <div className="flex gap-1 mb-2">
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-[10px] rounded-full">
+                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
                         {hoveredTrip.type}
                       </span>
-                      <span className="px-2 py-1 bg-green-100 text-green-700 text-[10px] rounded-full">
+                      <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
                         {hoveredTrip.terrain}
                       </span>
                     </div>
-                    <p className="text-[10px] text-gray-500 italic line-clamp-2">
+                    <p className="text-xs text-gray-500 italic line-clamp-2">
                       {hoveredTrip.excerpt}
                     </p>
                     <div className="mt-3 text-center">
                       <span className="text-xs font-bold text-blue-600">
-                        Click to view →
+                        Clicca per vedere &rarr;
                       </span>
                     </div>
                   </div>

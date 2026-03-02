@@ -32,6 +32,7 @@ export default function TripCard({ trip, index }: TripCardProps) {
     >
       <Link href={`/trips/${trip.slug}`} className="group block">
         <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-zinc-100 mb-6">
+          <div className="absolute inset-0 bg-zinc-200 dark:bg-zinc-800 animate-pulse" />
           <motion.div 
             style={{ 
               y: prefersReducedMotion ? 0 : y, 
@@ -52,7 +53,7 @@ export default function TripCard({ trip, index }: TripCardProps) {
           <div className="absolute bottom-6 left-6 right-6">
             <div className="flex flex-wrap gap-2">
               {trip.tags.slice(0, 2).map((tag) => (
-                <span key={tag} className="text-[10px] uppercase tracking-widest bg-white/90 backdrop-blur-sm text-black px-2 py-1 rounded-full font-bold">
+                <span key={tag} className="text-xs uppercase tracking-widest bg-white/90 backdrop-blur-sm text-black px-2 py-1 rounded-full font-bold">
                   {tag}
                 </span>
               ))}
@@ -66,7 +67,7 @@ export default function TripCard({ trip, index }: TripCardProps) {
           </div>
           <div className="text-right">
             <p className="text-sm font-bold">{(trip.stats.distance / 1000).toFixed(0)}km</p>
-            <p className="text-[10px] uppercase tracking-widest text-muted font-bold">{trip.stats.elevationGain}m+</p>
+            <p className="text-xs uppercase tracking-widest text-muted font-bold">{trip.stats.elevationGain}m+</p>
           </div>
         </div>
       </Link>
